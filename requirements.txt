@@ -1,0 +1,4 @@
+Flask==2.0.1
+Flask-Cors==3.0.10
+selenium==3.141.0
+webdriver_manager==3.4.2
