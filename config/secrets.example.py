@@ -1,0 +1,2 @@
+NFL_USERNAME = ""
+NFL_PASSWORD = ""
