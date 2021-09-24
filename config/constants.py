@@ -17,3 +17,68 @@ MATCHUP_NAVIGATION = dict(
     TEAM_LAST="div.last > em",
     POINTS_LAST="div.last > span"
 )
+# Wait for this element to confirm the TEAM_URL page has loaded
+TEAM_SELECTOR = "#quickinfo_teamselector"
+# We will navigate through each of these sections that make up a roster
+ROSTER_NAVIGATION = dict(
+    OFFENSE="#tableWrap-O tr",
+    KICKER="#tableWrap-K tr",
+    DEFENSE="#tableWrap-DT tr"
+)
+
+COMMON_PLAYER_DATA_KEYS = [
+    "teamPos",
+    "",
+    [
+        "playerName",
+        "playerPos",
+        "playerTeam"
+    ],
+    "opp",
+    "gameDetails",
+]
+# Each index, n, maps to the data represented by the n + 1 column in the roster table
+# Each value is the key we will use to represent the data in that column
+# If a value is empty, we don't need the data in that column
+PLAYER_DATA_KEYS = dict(
+    OFFENSE=[
+        *COMMON_PLAYER_DATA_KEYS,
+        "passYards",
+        "passTD",
+        "passInt",
+        "rushYards",
+        "rushTD",
+        "rec",
+        "recYards",
+        "recTD",
+        "retTD",
+        "",
+        "twoPtConv",
+        "fumbles",
+        "fantasyPts"
+    ],
+    KICKER=[
+        *COMMON_PLAYER_DATA_KEYS,
+        "pats",
+        "fg0_19",
+        "fg20_29",
+        "fg30_39",
+        "fg40_49",
+        "fg50",
+        "fantasyPts"
+    ],
+    DEFENSE=[
+        *COMMON_PLAYER_DATA_KEYS,
+        "sacks",
+        "int",
+        "fumRec",
+        "fumForced",
+        "safety",
+        "td",
+        "block",
+        "retTD",
+        "ptsAllow",
+        "yardsAllow",
+        "fantasyPts"
+    ]
+)
