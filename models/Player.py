@@ -1,39 +1,37 @@
+import json
+import hashlib
 from selenium.webdriver.remote.webelement import WebElement
-from config.constants import PLAYER_DATA_KEYS
-from utils.player_utils import get_data_from_column
+from config.constants import COMMON_PLAYER_DATA_KEYS
+from models.PlayerTableData import PlayerTableData
+# from utils.player_utils import get_data_from_column
+
 
 class Player:
 
     def __init__(self, player_data_html: [], player_type: str):
-        self.player_data_html = player_data_html
+        self.player_table_data: PlayerTableData = PlayerTableData(player_data_html, player_type)
         self.player_type = player_type
-        # self.player_data = self.parse_player_data_html()
 
-    # def parse_player_data_html(self):
-    #     player_json = dict()
-    #     if len(self.player_data) <= 0:
-    #         return player_json
-    #
-    #     td: WebElement
-    #     for td, idx in self.player_data_html:
-    #         if self.player_type == "OFFENSE":
-    #             td_key = PLAYER_DATA_KEYS["OFFENSE"][idx]
-    #             # All the keys are strings that have a one-to-one mapping with a column,
-    #             # except for player data, which is an array
-    #             if not isinstance(td_key, list):
-    #                 player_json[td_key] = get_data_from_column(td, td_key)
-    #             else:
-    #                 pass
-    #
-    #     for key in player_json:
-    #         print(key)
-    #         print(player_json[key])
-    #         print("\n")
+    # TODO: We shouldn't do this on the fly
+    def get_player_id(self, name, pos, nfl_team):
+        m = hashlib.md5()
+        m.update(name + pos + nfl_team)
+        return str(int(m.hexdigest(), 16))[0:12]
 
-    @staticmethod
-    def get_basic_json():
-        return None
+    def get_basic_json(self, as_dict=False):
+        """
+        Here, the basic JSON includes the player name, NFL team, position, and team logo
+        :return: JSON - basic player info
+        """
+        player_json = dict()
 
-    @staticmethod
+        if not self.player_table_data:
+            return json.dumps(player_json, indent=4) if not as_dict else player_json
+
+        # td element in column 3 stores the data we want
+        # name = get_data_from_column(td_element, COMMON_PLAYER_DATA_KEYS[2][0])
+        player_json = self.player_table_data.get_table_data()
+        return json.dumps(player_json, indent=4) if not as_dict else player_json
+
     def get_full_json(self):
         return None

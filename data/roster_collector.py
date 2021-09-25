@@ -26,11 +26,14 @@ def get_driver():
 # Process team stats for the given week
 def parse_team_roster_page(driver, team_id):
     # Navigate to URL for the given team ID
-    driver.get(config.TEAM_URL + str(team_id))
+    driver.get(config.TEAM_URL + str(team_id) + config.TEAM_URL_YEARLY_STATS)
 
-    # Wait for the DOM to finish loading
+    # Wait for the DOM to finish loading elements we need
     WebDriverWait(driver, constants.TIMEOUT_DEFAULT).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, constants.TEAM_SELECTOR))
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, constants.TEAM_SELECTOR))
+    )
+    WebDriverWait(driver, constants.TIMEOUT_DEFAULT).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, constants.YEARLY_STATS_BTN))
     )
 
     try:
@@ -67,8 +70,15 @@ def main():
 
     while curr_team <= num_teams:
         team_players_html = parse_team_roster_page(driver, curr_team)
-        print("Generating team roster")
         team_roster = create_team_roster(driver, curr_team, team_players_html)
+        team_roster_json = team_roster.get_basic_json() if team_roster is not None else ""
+
+        if team_roster_json is not None:
+            with open("data/" + "roster_" + str(curr_team) + ".json", "w") as file:
+                file.write(team_roster_json)
+
+        curr_team += 1
+        time.sleep(5)
 
 
 main()

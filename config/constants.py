@@ -17,8 +17,9 @@ MATCHUP_NAVIGATION = dict(
     TEAM_LAST="div.last > em",
     POINTS_LAST="div.last > span"
 )
-# Wait for this element to confirm the TEAM_URL page has loaded
+# Wait for these elements to confirm the TEAM_URL page has loaded
 TEAM_SELECTOR = "#quickinfo_teamselector"
+YEARLY_STATS_BTN = "li#st2021"
 # We will navigate through each of these sections that make up a roster
 ROSTER_NAVIGATION = dict(
     OFFENSE="#tableWrap-O tr",
