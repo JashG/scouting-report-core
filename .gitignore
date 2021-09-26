@@ -139,8 +139,9 @@ cython_debug/
 
 # IDE
 .idea
+.DS_Store
 
 # Project-specific data, config, etc.
 config/config.py
 config/secrets.py
-data/roster*
+data/db

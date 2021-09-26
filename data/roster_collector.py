@@ -68,9 +68,14 @@ def main():
     curr_team = 1
     num_teams = len(config.TEAM_MAP)
 
+    # Fetch and store each team's roster in a JSON obj
+    # Stores the up-to-date roster with season stats up to this week for each player
     while curr_team <= num_teams:
+        # List of <tr> elements, where each row is a player
         team_players_html = parse_team_roster_page(driver, curr_team)
+        # Parses each <tr> into a Player, and stores the list of Players in a Roster
         team_roster = create_team_roster(driver, curr_team, team_players_html)
+        # Convert the Roster to JSON, which we will save to a file
         team_roster_json = team_roster.get_basic_json() if team_roster is not None else ""
 
         if team_roster_json is not None:
@@ -78,6 +83,7 @@ def main():
                 file.write(team_roster_json)
 
         curr_team += 1
+        # Sleep before navigating to next team's URL
         time.sleep(5)
 
 
