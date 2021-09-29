@@ -24,7 +24,7 @@ class Roster:
     def num_players(self):
         return len(self.players)
 
-    def get_basic_json(self):
+    def to_json(self):
         output = dict(
             team_id=self.team_id,
             team_name=self.team_name,
@@ -33,9 +33,9 @@ class Roster:
         )
 
         player: Player
-        print("Getting roster for team " + str(self.team_id))
         for player in self.players:
-            next_player = player.get_basic_json(True)
-            output["players"].append(next_player)
+            next_player = player.to_json(True)
+            if next_player:
+                output["players"].append(next_player)
 
         return json.dumps(output, indent=4)

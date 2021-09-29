@@ -18,11 +18,7 @@ class Player:
         m.update(name + pos + nfl_team)
         return str(int(m.hexdigest(), 16))[0:12]
 
-    def get_basic_json(self, as_dict=False):
-        """
-        Here, the basic JSON includes the player name, NFL team, position, and team logo
-        :return: JSON - basic player info
-        """
+    def to_json(self, as_dict=False):
         player_json = dict()
 
         if not self.player_table_data:
@@ -32,6 +28,3 @@ class Player:
         # name = get_data_from_column(td_element, COMMON_PLAYER_DATA_KEYS[2][0])
         player_json = self.player_table_data.get_table_data()
         return json.dumps(player_json, indent=4) if not as_dict else player_json
-
-    def get_full_json(self):
-        return None

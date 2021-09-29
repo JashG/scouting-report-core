@@ -9,8 +9,8 @@ DEFENSE_KEYS = PLAYER_DATA_KEYS["DEFENSE"]
 
 class PlayerTableData:
 
-    def __init__(self, tr_element: [], player_type: str):
-        self.table_row = tr_element
+    def __init__(self, td_elements: [], player_type: str):
+        self.table_row = td_elements
         self.player_type = player_type
         self.table_data = self.init_table_data()
 

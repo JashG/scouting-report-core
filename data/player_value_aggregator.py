@@ -18,7 +18,7 @@ curr_team = 1
 num_teams = len(config.TEAM_MAP)
 
 # Append trade value as a field to each player
-while curr_team < num_teams:
+while curr_team <= num_teams:
     # 1) Dump current team's roster into a dict
     curr_team_dict = dict()
     try:
