@@ -26,6 +26,16 @@ ROSTER_NAVIGATION = dict(
     KICKER="#tableWrap-K tr",
     DEFENSE="#tableWrap-DT tr"
 )
+# If viewing the matchup screen, both rosters are shown on the same screen.
+# So, navigate a bit differently
+ROSTER_NAVIGATION_MATCHUP = dict(
+    OFFENSE_TOP=".teamWrap-1 #tableWrap-O tr",
+    OFFENSE_BOTTOM=".teamWrap-2 #tableWrap-O tr",
+    KICKER_TOP=".teamWrap-1 #tableWrap-K tr",
+    KICKER_BOTTOM=".teamWrap-2 #tableWrap-K tr",
+    DEFENSE_TOP=".teamWrap-1 #tableWrap-DT",
+    DEFENSE_BOTTOM=".teamWrap-2 #tableWrap-DT"
+)
 
 COMMON_PLAYER_DATA_KEYS = [
     "teamPos",

@@ -20,6 +20,9 @@ def parse_team_roster_page(driver, is_yearly_page=False):
         )
 
     try:
+        # If we're not on a yearly page, use the ROSTER_NAVIGATION constant
+        # Otherwise, if we're on a matchup page, use the ROSTER_NAVIGATION_MATCHUP constant;
+        # the
         offense = driver.find_elements_by_css_selector(constants.ROSTER_NAVIGATION.get("OFFENSE"))
         kickers = driver.find_elements_by_css_selector(constants.ROSTER_NAVIGATION.get("KICKER"))
         defense = driver.find_elements_by_css_selector(constants.ROSTER_NAVIGATION.get("DEFENSE"))

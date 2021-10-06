@@ -43,12 +43,11 @@ def trade_generator():
             all_rosters.append(curr_team_roster_sorted)
 
         curr_team += 1
+        # Reset this variable - for some reason, the previous data remains in memory
         curr_team_roster = dict()
 
-    # Team ID corresponds to idx - 1 in this list
-    # Each value is a dict of the players sent vs. received
+    # Each value in the list is a dict of the players sent vs. received
     all_trades = []
-    curr_team_roster = dict()
     curr_team = 1
     while curr_team <= num_teams:
         trades_for_curr_team = []
@@ -65,19 +64,23 @@ def trade_generator():
 
 
 data = trade_generator()
-# for idx, team in enumerate(data):
-#     print("Team " + str(idx + 1) + " trades")
-#     for trade in team:
-#         send1 = trade.get("send")[0]["playerName"]
-#         # send2 = trade.get("send")[1]["playerName"]
-#         get1 = trade.get("receive")[0]["playerName"]
-#         # get2 = trade.get("receive")[1]["playerName"]
-#         print("Send: ")
-#         print(send1)
-#         # print(send2)
-#         print("Get: ")
-#         print(get1)
-#         # print(get2)
-#         print("\n")
+
+for idx, team in enumerate(data):
+    print("Team " + str(idx + 1) + " trades")
+    # Write trade to file
+    with open("data/db/team" + str(idx + 1) + "/trades.json", "w") as file:
+        file.write(json.dumps(team, indent=4))
+    for trade in team:
+        send1 = trade.get("send")[0]["playerName"]
+        # send2 = trade.get("send")[1]["playerName"]
+        get1 = trade.get("receive")[0]["playerName"]
+        # get2 = trade.get("receive")[1]["playerName"]
+        print("Send: ")
+        print(send1)
+        # print(send2)
+        print("Get: ")
+        print(get1)
+        # print(get2)
+        print("\n")
 
 # Analyze results
