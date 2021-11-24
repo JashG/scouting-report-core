@@ -27,7 +27,17 @@ class Player:
         # td element in column 3 stores the data we want
         # name = get_data_from_column(td_element, COMMON_PLAYER_DATA_KEYS[2][0])
         player_dict = self.player_table_data.get_table_data()
-        player_dict["id"] = Player.get_player_id(player_dict.get("playerName"),
-                                                 player_dict.get("playerPos"),
-                                                 player_dict.get("playerTeam"))
+        player_dict["id"] = self.__hash__()
         return json.dumps(player_dict, indent=4) if not as_dict else player_dict
+
+    def __hash__(self):
+        player_dict = self.player_table_data.get_table_data()
+        return Player.get_player_id(player_dict.get("playerName"),
+                                    player_dict.get("playerPos"),
+                                    player_dict.get("playerTeam"))
+
+    def __eq__(self, other):
+        hash1 = self.__hash__()
+        hash2 = other.__hash__()
+
+        return hash1 == hash2

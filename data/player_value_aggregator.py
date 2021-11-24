@@ -3,16 +3,26 @@ import json
 from config import config
 
 all_player_trade_values = dict()
+all_player_prev_trade_values = dict()
 
 # Map player name to their trade value
-with open("data/db/player_values.csv", newline="") as file:
+# with open("data/db/player_values.csv", newline="") as file:
+#     reader = csv.reader(file, delimiter=",")
+#     for row in reader:
+#         if len(row) == 3:
+#             player = row[0]
+#             player_name = " ".join(player.split(" ")[:-1])
+#             value = row[2]
+#             all_player_trade_values[player_name] = value
+with open("data/db/player_values_fp.csv", newline="") as file:
     reader = csv.reader(file, delimiter=",")
     for row in reader:
-        if len(row) == 3:
-            player = row[0]
-            player_name = " ".join(player.split(" ")[:-1])
-            value = row[2]
+        if len(row) == 4:
+            player_name = row[0]
+            value = row[2] if row[2] != "N/A" else "0"
+            prev_value = row[3] if row[3] != "N/A" else "0"
             all_player_trade_values[player_name] = value
+            all_player_prev_trade_values[player_name] = prev_value
 
 curr_team = 1
 num_teams = len(config.TEAM_MAP)
@@ -33,7 +43,9 @@ while curr_team <= num_teams:
         player_name = player.get("playerName", "")
         if player_name:
             player_value = all_player_trade_values.get(player_name, "0")
+            prev_player_value = all_player_prev_trade_values.get(player_name, "0")
             player["playerValue"] = player_value
+            player["prevPlayerValue"] = prev_player_value
 
     # 3) Write back to json
     try:
